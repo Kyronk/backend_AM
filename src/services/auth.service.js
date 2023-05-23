@@ -1,7 +1,7 @@
 
-import db from '../models';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import db from "../models";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 
 const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(8));
@@ -22,15 +22,15 @@ export const registerService = ({name, email, password}) => new Promise(async(re
             id: response[0].id,
             name: response[0].name,
             email: response[0].email,
-            role_code: response[0].role_code = 'R3',
+            role_code: response[0].role_code = "R3",
         }, process.env.JWT_SECRET,
         {
-            expiresIn: '5d'
+            expiresIn: "5d"
         }): null;
         resolve({
             error: response[1]? 0 : 1,
             message: response[1] ? "Register is successfully" : "Email is used",
-            'access_token': token
+            "access_token": token
         })
 
     } catch (error) {
@@ -50,13 +50,13 @@ export const loginService = ({email, password}) => new Promise(async(resolve, re
             name: response.name,
             role_code: response.role_code,
         }, process.env.JWT_SECRET,{
-            expiresIn: '5d'
+            expiresIn: "5d"
         }) : null
 
         resolve({
             err: token ? 0: -1,
-            message: token ? 'login is successfully': response ? 'password is wrong' : 'email has been registered',
-            'access_token': token ? `Bearer ${token}` : token //(token này là null)
+            message: token ? "login is successfully": response ? "password is wrong" : "email has been registered",
+            "access_token": token ? `Bearer ${token}` : token //(token này là null)
         });
 })
 
